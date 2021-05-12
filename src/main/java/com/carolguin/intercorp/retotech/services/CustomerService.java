@@ -34,17 +34,19 @@ public class CustomerService {
   }
 
   public Optional<CustomerStats> getCustomerStats() {
-    Optional<CustomerStats> customerStatsOptional = customerRepository.getCustomerStats();
-    if (customerStatsOptional.isPresent()) {
-      CustomerStats customerStats = customerStatsOptional.get();
-      LOGGER.info("Customers' average age -> {}", customerStats.getAgeAverage());
-      LOGGER.info("Standard deviation of customer ages -> {}", customerStats.getAgeStandardDeviation());
+    Double ageAverage = customerRepository.getAgeAverage();
+    Double ageStandardDeviation = customerRepository.getAgeStandardDeviation();
+    if (ageAverage!=null && ageStandardDeviation!=null) {
+      LOGGER.info("Customers' average age -> {}", ageAverage);
+      LOGGER.info("Standard deviation of customer ages -> {}", ageStandardDeviation);
+      return Optional.of(new CustomerStats(ageAverage, ageStandardDeviation));
     }
     else {
       LOGGER.warn("Unable to calculate customer statistics");
+      return Optional.empty();
     }
-    return customerStatsOptional;
   }
+
 
   public List<CustomerAllData> getAllData(){
     LOGGER.info("Getting all customers data");
