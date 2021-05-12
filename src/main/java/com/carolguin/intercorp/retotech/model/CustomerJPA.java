@@ -19,6 +19,8 @@ public class CustomerJPA {
   private int age;
   private Date birthday;
 
+  public CustomerJPA(){}
+
   public CustomerJPA(Customer customer){
     this.firstName = customer.getFirstName();
     this.lastName = customer.getLastName();
